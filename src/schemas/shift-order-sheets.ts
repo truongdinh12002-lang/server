@@ -15,6 +15,8 @@ export const shiftOrderSheetListSchema = createListQuerySchema(
     workShiftId: uuid,
     leaderId: uuid,
     areaId: uuid,
+    statusId: uuid,
+    categoryId: uuid,
   },
 );
 
@@ -24,6 +26,27 @@ export const shiftOrderSheetDetailSchema = {
     additionalProperties: false,
     required: ['id'],
     properties: { id: uuid },
+  },
+  querystring: {
+    type: 'object',
+    additionalProperties: false,
+    properties: {
+      search: { type: 'string', maxLength: 100 },
+      statusId: uuid,
+      categoryId: uuid,
+    },
+  },
+};
+
+export const shiftOrderSheetIncomingSchema = {
+  querystring: {
+    type: 'object',
+    additionalProperties: false,
+    required: ['workDate', 'workShiftId'],
+    properties: {
+      workDate: { type: 'string', format: 'date' },
+      workShiftId: uuid,
+    },
   },
 };
 
@@ -35,6 +58,11 @@ export const shiftOrderSheetCurrentSchema = {
 };
 
 export const shiftOrderSheetExportSchema = {
-  params: shiftOrderSheetDetailSchema.params,
+  params: {
+    type: 'object',
+    additionalProperties: false,
+    required: ['id'],
+    properties: { id: uuid },
+  },
   produces: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
 };
