@@ -66,3 +66,5 @@ dist
 
 .env
 .env.example
+
+.codex-tmp
